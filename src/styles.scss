@@ -1,0 +1,169 @@
+/* You can add global styles to this file, and also import other style files */
+
+/* Provide sufficient contrast against white background */
+
+
+// SCSS Shortcuts to get theme colours
+$main-background: 'main-background';
+$secondary-background: 'secondary-background';
+$primary-font: 'primary-font';
+$secondary-font: 'secondary-font';
+
+
+a {
+  color: #0366d6;
+}
+
+code {
+  color: #e01a76;
+}
+
+.btn-primary {
+  color: #fff;
+  background-color: #1b6ec2;
+  border-color: #1861ac;
+}
+
+@font-face {
+  font-family: "Sora-SemiBold";
+  src: local("Sora"), url(./assets/fonts/sora/static/Sora-SemiBold.ttf) format("truetype");
+}
+
+@font-face {
+  font-family: "Sora-Regular";
+  src: local("Sora"), url(./assets/fonts/sora/static/Sora-Regular.ttf) format("truetype");
+}
+
+@font-face {
+  font-family: "Sora-ExtraBold";
+  src: local("Sora"), url(./assets/fonts/sora/static/Sora-ExtraBold.ttf) format("truetype");
+}
+
+@font-face {
+  font-family: "Sora-Light";
+  src: local("Sora"), url(./assets/fonts/sora/static/Sora-Light.ttf) format("truetype");
+}
+
+@font-face {
+  font-family: "Sora-Regular";
+  src: local("Sora"), url(./assets/fonts/sora/static/Sora-Regular.ttf) format("truetype");
+}
+
+@font-face {
+  font-family: "Sora-Medium";
+  src: local("Sora"), url(./assets/fonts/sora/static/Sora-Regular.ttf) format("truetype");
+}
+
+// dark theme colours:
+$mint-cream:  #F7FFF7;
+$jet: #343434;
+$space-cadet: #2F3061;
+$yellow-crayola: #FFE66D;
+$air-superiority-blue: #6CA6C1;
+
+// light theme colours
+$magnolia: #EFE9F4;
+$max-blue-green: #16BAC5;
+$maya-blue: #5FBFF9;
+$dark-jungle-green: #171D1C;
+$primary: #5864F8;
+
+
+$background-light: $magnolia;
+$background-dark: $jet;
+
+$secondary-background-light: $max-blue-green;
+$secondary-background-dark: $yellow-crayola;
+
+$primary-font-light: $magnolia;
+$primary-font-dark: $jet;
+
+// Unused atm..
+$secondary-font-light: $dark-jungle-green;
+$secondary-font-dark: $space-cadet;
+
+$themes: (
+  default: (
+    main-background: $background-light,
+    secondary-background: $secondary-background-light,
+    primary-font: $primary-font-light,
+    secondary-font: $secondary-font-light
+  ),
+
+  dark: (
+    main-background: $background-dark,
+    secondary-background: $secondary-background-dark,
+    primary-font: $primary-font-dark,
+    secondary-font: $secondary-font-dark
+  )
+);
+
+
+@mixin themed($themes: $themes) {
+  @each $theme, $map in $themes {
+
+    .theme-#{$theme} & {
+      $theme-map: () !global;
+      @each $key, $submap in $map {
+        $value: map-get(map-get($themes, $theme), '#{$key}');
+        $theme-map: map-merge($theme-map, ($key: $value)) !global;
+      }
+
+      @content;
+      $theme-map: null !global;
+    }
+
+  }
+}
+
+@function t($key) {
+  @return map-get($theme-map, $key);
+}
+
+html, body {
+  height: 100%;
+  margin: 0px;
+}
+
+.main-background {
+  @include themed() {
+    background-color: t($main-background);
+  }
+}
+
+.middle-bar {
+  @include themed() {
+    background-color: t($secondary-background);
+  }
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+}
+
+.max-blue-green-font {
+  color: #16BAC5;
+}
+
+.maya-blue-font {
+  color: #F7FFF7;
+}
+
+.dark-jungle-green-font {
+  color: #171D1C;
+}
+
+.primary-font {
+  @include themed() {
+    color: t($primary-font);
+  }
+}
+
+.theme-change-button {
+  display: flex;
+  justify-content: flex-end;
+  padding-top: 1rem;
+  padding-right: 1rem;
+  padding-bottom: 1rem;
+}
+
+
+

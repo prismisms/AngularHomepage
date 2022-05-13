@@ -1,0 +1,9 @@
+<body class="theme-default" style="font-family: 'Sora-SemiBold';">
+  <!-- <app-nav-menu></app-nav-menu> -->
+  <div class="container-fluid main-background" style="height: 100%">
+    <div class="theme-change-button">
+      <button class="btn" [ngClass]="defaultThemeActive ? 'btn-light' : 'btn-dark'" type="button" (click)="changeTheme()">{{ themeButtonText }}</button>
+    </div>
+    <router-outlet></router-outlet>
+  </div>
+</body>
